@@ -9,7 +9,9 @@
 namespace STS\Slack\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use STS\Slack\Contracts\SlashCommands\Dispatcher as DispatcherContract;
 use STS\Slack\Http\Middleware\Request;
+use STS\Slack\SlashCommands\Dispatcher;
 
 class SlackSdk extends ServiceProvider
 {
@@ -23,6 +25,20 @@ class SlackSdk extends ServiceProvider
     public function register(): void
     {
         $this->handlePublishing();
+
+        $this->app->singleton(Dispatcher::class, function ($app) {
+            $config = $app->make('config')->get('slack');
+            return Dispatcher::create($config['slash_commands']);
+        });
+
+        $this->app->alias(
+            Dispatcher::class,
+            DispatcherContract::class
+        );
+        $this->app->alias(
+            Dispatcher::class,
+            'SlashCommandDispatcher'
+        );
     }
 
     /**
@@ -37,6 +53,18 @@ class SlackSdk extends ServiceProvider
             $publishConfigPath = base_path('config/slack.php');
         }
         $this->publishes([$this->configPath => $publishConfigPath], 'slack-configuration');
+    }
+
+    /**
+     * Get the services provided by the provider.
+     */
+    public function provides(): array
+    {
+        return [
+            Dispatcher::class,
+            DispatcherContract::class,
+            'SlashCommandDispatcher',
+        ];
     }
 
     public function boot(): void
