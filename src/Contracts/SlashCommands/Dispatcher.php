@@ -32,7 +32,7 @@ interface Dispatcher
      *
      * @return mixed
      */
-    public function dispatch(string $command, SlashCommand $slashCommand);
+    public function dispatch(SlashCommand $slashCommand);
 
     /**
      * Remove a command from the dispatcher.

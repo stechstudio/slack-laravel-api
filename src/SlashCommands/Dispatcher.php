@@ -71,9 +71,9 @@ class Dispatcher implements DispatcherContract
      *
      * @return mixed
      */
-    public function dispatch(string $command, SlashCommand $slashCommand)
+    public function dispatch(SlashCommand $slashCommand)
     {
-        return call_user_func($this->handlers[$command], $slashCommand);
+        return call_user_func($this->handlers[$slashCommand->getCommand()], $slashCommand);
     }
 
     /**
