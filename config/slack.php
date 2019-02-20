@@ -9,4 +9,22 @@ return [
      * https://api.slack.com/docs/verifying-requests-from-slack#about
      */
     'signing_secret' => env('SLACK_SIGNING_SECRET'),
+
+    /**
+     * Here you can define the slash commands and associated handler
+     * for each command.
+     *
+     * You may register a class that implements a `handle(SlashCommand $slashCommand)` method
+     * ```
+     * '/foobar' => STS\Slack\Handlers\FooBar::class,
+     * ```
+     *
+     * You may also use a closure or any other callable
+     * ```
+     * '/foo' => function (SlashCommand $slashCommand) {
+     *      return do_something_with($slashCommand);
+     * },
+     * ```
+     */
+    'slash_commands' => [],
 ];
