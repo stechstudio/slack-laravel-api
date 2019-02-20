@@ -25,7 +25,7 @@ class Text
      *
      * @var string
      */
-    protected $text = '';
+    protected $text;
 
     /**
      * Indicates whether emojis in a text field should be escaped
@@ -44,6 +44,14 @@ class Text
      * @var bool
      */
     protected $verbatim = false;
+
+    public function __construct(string $text, string $type = 'mrkdwn', bool $emoji = false, bool $verbatim = false)
+    {
+        $this->text = $text;
+        $this->type = $type;
+        $this->emoji = $emoji;
+        $this->verbatim = $verbatim;
+    }
 
     public function getType(): string
     {
@@ -72,13 +80,11 @@ class Text
         return $this->emoji;
     }
 
-
     public function setEmoji(bool $emoji): Text
     {
         $this->emoji = $emoji;
         return $this;
     }
-
 
     public function isVerbatim(): bool
     {
