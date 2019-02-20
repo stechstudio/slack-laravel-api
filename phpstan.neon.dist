@@ -17,3 +17,4 @@ parameters:
     # - '#Call to.*Illuminate.*#'
     # - '#Call to.*Laravel.*#'
     # Ignore other PHP Dark Magic
+    - '#Cannot access offset .* on Illuminate.*#'
