@@ -9,6 +9,7 @@
 namespace STS\Slack\Models;
 
 use Illuminate\Support\Collection;
+use function resolve;
 
 class SlashCommand
 {
@@ -78,16 +79,6 @@ class SlashCommand
     }
 
     /**
-     *  The command that was typed in to trigger this request.
-     *  this value can be useful if you want to use a single Request URL
-     *  to service multiple Slash Commands, as it lets you tell them apart.
-     */
-    public function getCommand(): string
-    {
-        return $this->attributes->get('command');
-    }
-
-    /**
      * This is the part of the Slash Command after the command itself, and it can contain absolutely anything that
      * the user might decide to type. It is common to use this text parameter to provide extra context for the command.
      *
@@ -115,5 +106,23 @@ class SlashCommand
     public function getTriggerId(): string
     {
         return $this->attributes->get('trigger_id');
+    }
+
+    /**
+     * Determines if we have a handler registered for this Command
+     */
+    public function hasHandler(): bool
+    {
+        return resolve('SlashCommandDispatcher')->hasHandler($this->getCommand());
+    }
+
+    /**
+     *  The command that was typed in to trigger this request.
+     *  this value can be useful if you want to use a single Request URL
+     *  to service multiple Slash Commands, as it lets you tell them apart.
+     */
+    public function getCommand(): string
+    {
+        return $this->attributes->get('command');
     }
 }
