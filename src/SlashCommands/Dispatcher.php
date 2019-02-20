@@ -23,23 +23,11 @@ class Dispatcher implements DispatcherContract
      */
     protected $handlers = [];
 
-    /**
-     * Dispatch a command and call the handler.
-     *
-     * @return mixed
-     */
-    public function dispatch(string $command, SlashCommand $slashCommand)
+    public static function create(array $config = []): DispatcherContract
     {
-        return call_user_func($this->handlers[$command], $slashCommand);
-    }
-
-    /**
-     * Forget a registered command
-     */
-    public function forget(string $command): DispatcherContract
-    {
-        unset($this->handlers[$command]);
-        return $this;
+        $dispatcher = new static;
+        $dispatcher->registerConfiguredHandlers($config);
+        return $dispatcher;
     }
 
     /**
@@ -61,7 +49,6 @@ class Dispatcher implements DispatcherContract
         return $this;
     }
 
-
     /**
      * Register a command handler with the dispatcher.
      */
@@ -77,6 +64,25 @@ class Dispatcher implements DispatcherContract
     public function hasHandler(string $command): bool
     {
         return isset($this->handlers[$command]);
+    }
+
+    /**
+     * Dispatch a command and call the handler.
+     *
+     * @return mixed
+     */
+    public function dispatch(string $command, SlashCommand $slashCommand)
+    {
+        return call_user_func($this->handlers[$command], $slashCommand);
+    }
+
+    /**
+     * Forget a registered command
+     */
+    public function forget(string $command): DispatcherContract
+    {
+        unset($this->handlers[$command]);
+        return $this;
     }
 
 
