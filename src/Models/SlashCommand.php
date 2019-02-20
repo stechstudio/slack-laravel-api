@@ -109,6 +109,19 @@ class SlashCommand
     }
 
     /**
+     * Make it trivial for the slash command to dispatch itself.
+     *
+     * @return mixed
+     */
+    public function dispatch()
+    {
+        if ($this->hasHandler()) {
+            return resolve('SlashCommandDispatcher')->dispatch($this);
+        }
+
+    }
+
+    /**
      * Determines if we have a handler registered for this Command
      */
     public function hasHandler(): bool
