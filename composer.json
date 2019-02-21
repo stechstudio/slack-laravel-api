@@ -30,5 +30,12 @@
     "illuminate/http": "^5.7",
     "illuminate/support": "^5.7",
     "laravel/framework": "^5.7"
-  }
+  },
+  "extra": {
+        "laravel": {
+            "providers": [
+                "STS\\Slack\\Providers\\SlackSdk"
+            ]
+        }
+    }
 }
