@@ -35,47 +35,47 @@ class SlashCommand
      */
     public function getToken(): string
     {
-        return $this->attributes->get('token');
+        return $this->attributes->get('token', '');
     }
 
     public function getTeamId(): string
     {
-        return $this->attributes->get('team_id');
+        return $this->attributes->get('team_id', '');
     }
 
     public function getTeamDomain(): string
     {
-        return $this->attributes->get('team_domain');
+        return $this->attributes->get('team_domain', '');
     }
 
     public function getEnterpriseId(): string
     {
-        return $this->attributes->get('enterprise_id');
+        return $this->attributes->get('enterprise_id', '');
     }
 
     public function getEnterpriseName(): string
     {
-        return $this->attributes->get('enterprise_name');
+        return $this->attributes->get('enterprise_name', '');
     }
 
     public function getChannelId(): string
     {
-        return $this->attributes->get('channel_id');
+        return $this->attributes->get('channel_id', '');
     }
 
     public function getChannelName(): string
     {
-        return $this->attributes->get('channel_name');
+        return $this->attributes->get('channel_name', '');
     }
 
     public function getUserId(): string
     {
-        return $this->attributes->get('user_id');
+        return $this->attributes->get('user_id', '');
     }
 
     public function getUserName(): string
     {
-        return $this->attributes->get('user_name');
+        return $this->attributes->get('user_name', '');
     }
 
     /**
@@ -87,7 +87,7 @@ class SlashCommand
      */
     public function getText(): string
     {
-        return $this->attributes->get('test');
+        return $this->attributes->get('text', '');
     }
 
     /**
@@ -96,7 +96,7 @@ class SlashCommand
      */
     public function getResponseUrl(): string
     {
-        return $this->attributes->get('response_url');
+        return $this->attributes->get('response_url', '');
     }
 
     /**
@@ -105,7 +105,7 @@ class SlashCommand
      */
     public function getTriggerId(): string
     {
-        return $this->attributes->get('trigger_id');
+        return $this->attributes->get('trigger_id', '');
     }
 
     /**

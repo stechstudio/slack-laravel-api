@@ -41,7 +41,7 @@ class Dispatcher implements DispatcherI
                 continue;
             }
             if (class_exists($handler)) {
-                $this->handles($command, [$handler, 'handle']);
+                $this->handles($command, [new $handler, 'handle']);
                 continue;
             }
             throw new InvalidHandlerConfiguration(sprintf('[%s] is an invalid handler.', $handler));

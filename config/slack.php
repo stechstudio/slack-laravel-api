@@ -1,5 +1,7 @@
 <?php declare(strict_types=1);
 
+use STS\Slack\SlashCommands\Echoes;
+
 return [
     /**
      * On each HTTP request that Slack sends, they add
@@ -30,5 +32,6 @@ return [
         '/hello' => function (SlashCommand $slashCommand) {
             return 'Hello World';
         },
+        '/echo' => Echoes::class,
     ],
 ];
