@@ -10,6 +10,7 @@ namespace STS\Slack\Models;
 
 use Illuminate\Support\Collection;
 use STS\Slack\Exceptions\HandlerUndefined;
+use function json_encode;
 
 class SlashCommand
 {
@@ -117,9 +118,7 @@ class SlashCommand
     {
 
         if ($this->hasHandler()) {
-            $result = app()->make('SlashCommandDispatcher')->dispatch($this);
-            dd('SlashCommand', $result);
-            return $result;
+            return app()->make('SlashCommandDispatcher')->dispatch($this);
         }
         throw new HandlerUndefined(sprintf('[] is not a valid command.', $this->getCommand()));
     }
@@ -140,5 +139,10 @@ class SlashCommand
     public function getCommand(): string
     {
         return $this->attributes->get('command', '');
+    }
+
+    public function toJson(): string
+    {
+        return json_encode($this->attributes);
     }
 }

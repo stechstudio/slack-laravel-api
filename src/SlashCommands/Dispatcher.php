@@ -73,7 +73,6 @@ class Dispatcher implements DispatcherI
      */
     public function dispatch(SlashCommand $slashCommand)
     {
-        dd(call_user_func($this->handlers[$slashCommand->getCommand()], $slashCommand));
         return call_user_func($this->handlers[$slashCommand->getCommand()], $slashCommand);
     }
 

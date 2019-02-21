@@ -14,6 +14,6 @@ class Echoes
 {
     public function handle(SlashCommand $slashCommand): string
     {
-        return $slashCommand->getText();
+        return $slashCommand->toJson();
     }
 }
