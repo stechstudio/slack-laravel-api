@@ -11,6 +11,7 @@ namespace STS\Slack\Providers;
 use Illuminate\Support\ServiceProvider;
 use STS\Slack\Contracts\SlashCommands\Dispatcher as DispatcherContract;
 use STS\Slack\SlashCommands\Dispatcher;
+use function base_path;
 
 class SlackSdk extends ServiceProvider
 {
@@ -34,8 +35,7 @@ class SlackSdk extends ServiceProvider
         $this->handlePublishing();
 
         $this->app->singleton(Dispatcher::class, function ($app) {
-            $config = $app->make('config')->get('slack');
-            return Dispatcher::create($config['slash_commands']);
+            return Dispatcher::create(config('slack.slash_commands'));
         });
 
         $this->app->alias(
@@ -60,6 +60,7 @@ class SlackSdk extends ServiceProvider
             $publishConfigPath = base_path('config/slack.php');
         }
         $this->publishes([$this->configPath => $publishConfigPath], 'slack-configuration');
+        $this->publishes([$this->routePath => base_path('routes/slack.php')], 'slack-routes');
     }
 
     /**
