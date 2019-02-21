@@ -116,7 +116,6 @@ class SlashCommand
      */
     public function dispatch()
     {
-
         if ($this->hasHandler()) {
             return app()->make('SlashCommandDispatcher')->dispatch($this);
         }

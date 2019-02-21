@@ -8,6 +8,7 @@
 
 namespace STS\Slack\SlashCommands;
 
+use STS\Slack\Contracts\Messaging\Message;
 use STS\Slack\Contracts\SlashCommands\DispatcherI;
 use STS\Slack\Exceptions\InvalidHandlerConfiguration;
 use STS\Slack\Models\SlashCommand;
@@ -73,7 +74,11 @@ class Dispatcher implements DispatcherI
      */
     public function dispatch(SlashCommand $slashCommand)
     {
-        return call_user_func($this->handlers[$slashCommand->getCommand()], $slashCommand);
+        $result = call_user_func($this->handlers[$slashCommand->getCommand()], $slashCommand);
+        if (is_a($result, Message::class)) {
+            return $result->getResponse();
+        }
+        return $result;
     }
 
     /**
