@@ -1,5 +1,5 @@
 {
-  "name": "stechstudio/slack-sdk-php",
+  "name": "stechstudio/slack-laravel-api",
   "description": "Slack SDK for writing our own Slack App integrations.",
   "type": "library",
   "require": {
