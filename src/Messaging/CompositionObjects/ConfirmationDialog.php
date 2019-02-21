@@ -8,7 +8,9 @@
 
 namespace STS\Slack\Messaging\CompositionObjects;
 
-class ConfirmationDialog
+use STS\Slack\Contracts\Messaging\CompositionObject;
+
+class ConfirmationDialog implements CompositionObject
 {
     /**
      * A plain_text-only text object that defines the dialog's title.

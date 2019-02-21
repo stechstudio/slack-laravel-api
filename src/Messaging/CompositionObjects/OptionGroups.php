@@ -8,7 +8,9 @@
 
 namespace STS\Slack\Messaging\CompositionObjects;
 
-class OptionGroups
+use STS\Slack\Contracts\Messaging\CompositionObject;
+
+class OptionGroups implements CompositionObject
 {
     /**
      * A ... um ... group of options.

@@ -8,10 +8,12 @@
 
 namespace STS\Slack\Messaging\CompositionObjects;
 
+use STS\Slack\Contracts\Messaging\CompositionObject;
+
 /**
  * Provides a way to group options in a select menu.
  */
-class OptionGroup
+class OptionGroup implements CompositionObject
 {
     /**
      *    A plain_text only text object that defines the label shown above this group of options.

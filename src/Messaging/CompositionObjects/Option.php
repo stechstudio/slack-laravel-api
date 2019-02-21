@@ -8,10 +8,12 @@
 
 namespace STS\Slack\Messaging\CompositionObjects;
 
+use STS\Slack\Contracts\Messaging\CompositionObject;
+
 /**
  * An object that represents a single selectable item in a select menu.
  */
-class Option
+class Option implements CompositionObject
 {
     /**
      * A plain_text only text object that defines the text shown in the option on the menu.

@@ -9,7 +9,9 @@
 
 namespace STS\Slack\Messaging\CompositionObjects;
 
-class Text
+use STS\Slack\Contracts\Messaging\CompositionObject;
+
+class Text implements CompositionObject
 {
     /**
      * The formatting to use for this text object.
