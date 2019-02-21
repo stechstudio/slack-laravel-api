@@ -26,5 +26,9 @@ return [
      * },
      * ```
      */
-    'slash_commands' => [],
+    'slash_commands' => [
+        '/hello' => function (SlashCommand $slashCommand) {
+            return 'Hello World';
+        },
+    ],
 ];
