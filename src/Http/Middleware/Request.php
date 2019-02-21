@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Closure;
 use Exception;
 use Illuminate\Http\Request as LaravelRequest;
+use Illuminate\Http\Response as LaravelResponse;
 use STS\Slack\Exceptions\InvalidRequest;
 use STS\Slack\Exceptions\Timeout;
 
@@ -26,8 +27,11 @@ class Request
      *
      * @throws Exception
      */
-    public function handle(LaravelRequest $request, Closure $next): LaravelRequest
+    public function handle(LaravelRequest $request, Closure $next): LaravelResponse
     {
+        if (! env('SLACK_VALIDATE', true)) {
+            return $next($request);
+        }
         $this->verifySignatureIsPresent($request);
 
         $this->verifyTimestamp($request);
