@@ -10,7 +10,6 @@ namespace STS\Slack\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use STS\Slack\Contracts\SlashCommands\Dispatcher as DispatcherContract;
-use STS\Slack\Http\Middleware\Request;
 use STS\Slack\SlashCommands\Dispatcher;
 
 class SlackSdk extends ServiceProvider
@@ -22,8 +21,16 @@ class SlackSdk extends ServiceProvider
      */
     protected $configPath = __DIR__ . '/../../config/slack.php';
 
+    /**
+     * Default path to Slack route file in the package
+     *
+     * @var string
+     */
+    protected $routePath = __DIR__ . '/../../routes/slack.php';
+
     public function register(): void
     {
+
         $this->handlePublishing();
 
         $this->app->singleton(Dispatcher::class, function ($app) {
@@ -69,17 +76,6 @@ class SlackSdk extends ServiceProvider
 
     public function boot(): void
     {
-        $this->app['router']
-            ->middlewareGroup(
-                'slack',
-                [
-                    'throttle:60,1',
-                    'bindings',
-                    Request::class,
-                ]
-            )
-            ->middleware('slack')
-            ->namespace('STS\Slack\Controllers')
-            ->match(['get', 'post'], '/slack/api', 'Slack@webhook');
+        $this->loadRoutesFrom($this->routePath);
     }
 }
