@@ -99,4 +99,14 @@ class ConfirmationDialog
         $this->deny = $deny;
         return $this;
     }
+
+    public function toSlackObjectArray(): array
+    {
+        return [
+            'title' => $this->title->toSlackObjectArray(),
+            'text' => $this->text->toSlackObjectArray(),
+            'confirm' => $this->confirm->toSlackObjectArray(),
+            'deny' => $this->toSlackObjectArray(),
+        ];
+    }
 }
