@@ -8,7 +8,6 @@
 
 namespace STS\Slack\Providers;
 
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use STS\Slack\Http\Middleware\Request;
 use STS\Slack\SlashCommands\Dispatcher;
@@ -36,19 +35,10 @@ class SlackSdk extends ServiceProvider
 
         $this->handlePublishing();
 
-        $this->app->singleton(Dispatcher::class, function ($app) {
+        $this->app->singleton('SlashCommandDispatcher', function ($app) {
             return Dispatcher::create(config('slack.slash_commands'));
         });
 
-        $loader = AliasLoader::getInstance();
-        $loader->alias(
-            DispatcherI::class,
-            Dispatcher::class
-        );
-        $loader->alias(
-            'SlashCommandDispatcher',
-            Dispatcher::class
-        );
         $this->app['router']->aliasMiddleware('slack', Request::class);
     }
 

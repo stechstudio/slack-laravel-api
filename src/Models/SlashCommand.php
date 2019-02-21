@@ -9,7 +9,7 @@
 namespace STS\Slack\Models;
 
 use Illuminate\Support\Collection;
-use function resolve;
+use STS\Slack\Exceptions\HandlerUndefined;
 
 class SlashCommand
 {
@@ -115,10 +115,13 @@ class SlashCommand
      */
     public function dispatch()
     {
-        if ($this->hasHandler()) {
-            return resolve('SlashCommandDispatcher')->dispatch($this);
-        }
 
+        if ($this->hasHandler()) {
+            $result = app()->make('SlashCommandDispatcher')->dispatch($this);
+            dd('SlashCommand', $result);
+            return $result;
+        }
+        throw new HandlerUndefined(sprintf('[] is not a valid command.', $this->getCommand()));
     }
 
     /**
@@ -126,8 +129,7 @@ class SlashCommand
      */
     public function hasHandler(): bool
     {
-        dd(app()->make('SlashCommandDispatcher'));
-        return resolve('SlashCommandDispatcher')->hasHandler($this->getCommand());
+        return app()->make('SlashCommandDispatcher')->hasHandler($this->getCommand());
     }
 
     /**
@@ -137,6 +139,6 @@ class SlashCommand
      */
     public function getCommand(): string
     {
-        return $this->attributes->get('command');
+        return $this->attributes->get('command', '');
     }
 }
