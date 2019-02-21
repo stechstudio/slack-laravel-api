@@ -8,7 +8,9 @@
 
 namespace STS\Slack\Messaging\LayoutBlocks;
 
-class Context
+use STS\Slack\Contracts\Messaging\LayoutBlock;
+
+class Context implements LayoutBlock
 {
 
 }

@@ -8,7 +8,9 @@
 
 namespace STS\Slack\Messaging\LayoutBlocks;
 
-class Divider
+use STS\Slack\Contracts\Messaging\LayoutBlock;
+
+class Divider implements LayoutBlock
 {
 
 }

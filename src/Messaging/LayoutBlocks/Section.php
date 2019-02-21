@@ -8,7 +8,9 @@
 
 namespace STS\Slack\Messaging\LayoutBlocks;
 
-class Section
+use STS\Slack\Contracts\Messaging\LayoutBlock;
+
+class Section implements LayoutBlock
 {
     protected $type;
     protected $text;
