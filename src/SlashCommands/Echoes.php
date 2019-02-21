@@ -8,13 +8,15 @@
 
 namespace STS\Slack\SlashCommands;
 
-use STS\Slack\Messaging\Confirmation;
+use STS\Slack\Contracts\Messaging\Message as SlackMessage;
+use STS\Slack\Messaging\Message;
 use STS\Slack\Models\SlashCommand;
 
 class Echoes
 {
-    public function handle(SlashCommand $slashCommand)
+
+    public function handle(SlashCommand $slashCommand): SlackMessage
     {
-        return Confirmation::create();
+        return Message::create('It works');
     }
 }

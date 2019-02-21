@@ -8,7 +8,10 @@
 
 namespace STS\Slack\Messaging;
 
-class Message
+use Illuminate\Http\JsonResponse;
+use STS\Slack\Contracts\Messaging\Message as SlackMessage;
+
+class Message implements SlackMessage
 {
     /** @var string */
     private $text;
@@ -18,8 +21,18 @@ class Message
         $this->text = $text;
     }
 
-    public function toSlackObjectArray(): array
+    public static function create(string $text): self
     {
+        return new static($text);
+    }
 
+    public function __toString(): string
+    {
+        return $this->getResponse()->__toString();
+    }
+
+    public function getResponse(): JsonResponse
+    {
+        return response()->json(['text' => $this->text])->setStatusCode(200);
     }
 }
