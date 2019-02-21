@@ -10,17 +10,17 @@ namespace STS\Slack\Contracts\SlashCommands;
 
 use STS\Slack\Models\SlashCommand;
 
-interface Dispatcher
+interface DispatcherI
 {
     /**
      * Takes in a configuration and registers all the command handlers.
      */
-    public function registerConfiguredHandlers(array $config): Dispatcher;
+    public function registerConfiguredHandlers(array $config): DispatcherI;
 
     /**
      * Register a command handler with the dispatcher.
      */
-    public function handles(string $command, callable $handler): Dispatcher;
+    public function handles(string $command, callable $handler): DispatcherI;
 
     /**
      * Determine if a given command has a handler.
@@ -37,7 +37,7 @@ interface Dispatcher
     /**
      * Remove a command from the dispatcher.
      */
-    public function forget(string $command): Dispatcher;
+    public function forget(string $command): DispatcherI;
 
 
 }

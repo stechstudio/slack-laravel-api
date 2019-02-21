@@ -8,13 +8,13 @@
 
 namespace STS\Slack\SlashCommands;
 
-use STS\Slack\Contracts\SlashCommands\Dispatcher as DispatcherContract;
+use STS\Slack\Contracts\SlashCommands\DispatcherI;
 use STS\Slack\Exceptions\InvalidHandlerConfiguration;
 use STS\Slack\Models\SlashCommand;
 use function class_exists;
 use function is_callable;
 
-class Dispatcher implements DispatcherContract
+class Dispatcher implements DispatcherI
 {
     /**
      * The registered command handlers.
@@ -23,7 +23,7 @@ class Dispatcher implements DispatcherContract
      */
     protected $handlers = [];
 
-    public static function create(array $config = []): DispatcherContract
+    public static function create(array $config = []): DispatcherI
     {
         $dispatcher = new static;
         $dispatcher->registerConfiguredHandlers($config);
@@ -33,7 +33,7 @@ class Dispatcher implements DispatcherContract
     /**
      * Takes in a configuration and registers all the command handlers.
      */
-    public function registerConfiguredHandlers(array $config): DispatcherContract
+    public function registerConfiguredHandlers(array $config): DispatcherI
     {
         foreach ($config as $command => $handler) {
             if (is_callable($handler)) {
@@ -52,7 +52,7 @@ class Dispatcher implements DispatcherContract
     /**
      * Register a command handler with the dispatcher.
      */
-    public function handles(string $command, callable $handler): DispatcherContract
+    public function handles(string $command, callable $handler): DispatcherI
     {
         $this->handlers[$command] = $handler;
         return $this;
@@ -79,7 +79,7 @@ class Dispatcher implements DispatcherContract
     /**
      * Forget a registered command
      */
-    public function forget(string $command): DispatcherContract
+    public function forget(string $command): DispatcherI
     {
         unset($this->handlers[$command]);
         return $this;

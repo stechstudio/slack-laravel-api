@@ -126,6 +126,7 @@ class SlashCommand
      */
     public function hasHandler(): bool
     {
+        dd(app()->make('SlashCommandDispatcher'));
         return resolve('SlashCommandDispatcher')->hasHandler($this->getCommand());
     }
 
