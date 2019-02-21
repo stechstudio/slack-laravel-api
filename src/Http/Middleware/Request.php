@@ -7,7 +7,9 @@ use Closure;
 use Exception;
 use Illuminate\Http\Request as LaravelRequest;
 use STS\Slack\Exceptions\InvalidRequest;
+use STS\Slack\Messaging\Error;
 use Symfony\Component\HttpFoundation\Response;
+use Throwable;
 
 class Request
 {
@@ -31,12 +33,16 @@ class Request
         if (! env('SLACK_VALIDATE', true)) {
             return $next($request);
         }
-        $this->verifySignatureIsPresent($request);
+        try {
+            $this->verifySignatureIsPresent($request);
 
-        $this->verifyTimestamp($request);
+            $this->verifyTimestamp($request);
+        } catch (Throwable $t) {
+            return Error::create($t->getMessage())->getResponse();
+        }
 
         if ($request->header('X-Slack-Signature') !== $this->generateLocalSignature($request)) {
-            throw new InvalidRequest('Signatures do not match');
+            return Error::create('Verification failed. Perhaps check the configured Signing Secret?')->getResponse();
         }
 
         return $next($request);
