@@ -61,4 +61,12 @@ class Option
         $this->value = $value;
         return $this;
     }
+
+    public function toSlackObjectArray(): array
+    {
+        return [
+            'text' => $this->text->toSlackObjectArray(),
+            'value' => $this->value,
+        ];
+    }
 }
