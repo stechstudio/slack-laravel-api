@@ -8,7 +8,9 @@
 
 namespace STS\Slack\Messaging\BlockElements;
 
-class DatePicker
+use STS\Slack\Contracts\Messaging\BlockElement;
+
+class DatePicker implements BlockElement
 {
 
 }

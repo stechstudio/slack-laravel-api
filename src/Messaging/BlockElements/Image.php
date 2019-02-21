@@ -8,7 +8,9 @@
 
 namespace STS\Slack\Messaging\BlockElements;
 
-class Image
+use STS\Slack\Contracts\Messaging\BlockElement;
+
+class Image implements BlockElement
 {
 
 }

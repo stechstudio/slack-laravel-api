@@ -8,7 +8,9 @@
 
 namespace STS\Slack\Messaging\BlockElements;
 
-class OverflowMenu
+use STS\Slack\Contracts\Messaging\BlockElement;
+
+class OverflowMenu implements BlockElement
 {
 
 }

@@ -8,7 +8,9 @@
 
 namespace STS\Slack\Messaging\BlockElements;
 
-class Button
+use STS\Slack\Contracts\Messaging\BlockElement;
+
+class Button implements BlockElement
 {
 
 }

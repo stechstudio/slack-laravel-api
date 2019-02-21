@@ -8,7 +8,9 @@
 
 namespace STS\Slack\Messaging\BlockElements;
 
-class SelectMenus
+use STS\Slack\Contracts\Messaging\BlockElement;
+
+class SelectMenus implements BlockElement
 {
 
 }

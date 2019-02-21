@@ -10,5 +10,10 @@ namespace STS\Slack\Messaging\LayoutBlocks;
 
 class Section
 {
+    protected $type;
+    protected $text;
+    protected $blockId;
+    protected $fields;
+    protected $accessory;
 
 }
