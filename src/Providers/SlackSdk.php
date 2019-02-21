@@ -10,6 +10,7 @@ namespace STS\Slack\Providers;
 
 use Illuminate\Support\ServiceProvider;
 use STS\Slack\Contracts\SlashCommands\Dispatcher as DispatcherContract;
+use STS\Slack\Http\Middleware\Request;
 use STS\Slack\SlashCommands\Dispatcher;
 use function base_path;
 
@@ -46,6 +47,7 @@ class SlackSdk extends ServiceProvider
             Dispatcher::class,
             'SlashCommandDispatcher'
         );
+        $this->app['router']->aliasMiddleware('slack', Request::class);
     }
 
     /**
