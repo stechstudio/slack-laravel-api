@@ -5,7 +5,9 @@
   "require": {
     "guzzlehttp/psr7": "^1.5",
     "php-http/curl-client": "^1.7",
-    "jolicode/slack-php-api": "^1.0"
+    "jolicode/slack-php-api": "^1.0",
+    "ramsey/uuid": "^3.8",
+    "guzzlehttp/guzzle": "^6.3"
   },
   "autoload": {
     "classmap": [

@@ -13,4 +13,13 @@ use STS\Slack\Contracts\Messaging\LayoutBlock;
 class Actions implements LayoutBlock
 {
 
+    public function getType(): string
+    {
+        // TODO: Implement getType() method.
+    }
+
+    public function toSlackObjectArray(): array
+    {
+        // TODO: Implement toSlackObjectArray() method.
+    }
 }

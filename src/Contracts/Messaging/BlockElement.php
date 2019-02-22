@@ -10,7 +10,6 @@ namespace STS\Slack\Contracts\Messaging;
 
 interface BlockElement
 {
-
     /**
      * Convert the object to an array representation of the slack object.
      */
@@ -20,9 +19,4 @@ interface BlockElement
      * Get the type of block element
      */
     public function getType(): string;
-
-    /**
-     * Set the type of block element
-     */
-    public function setType(): BlockElement;
 }

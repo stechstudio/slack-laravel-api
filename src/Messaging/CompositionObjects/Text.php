@@ -10,8 +10,9 @@
 namespace STS\Slack\Messaging\CompositionObjects;
 
 use STS\Slack\Contracts\Messaging\CompositionObject;
+use STS\Slack\Contracts\Messaging\ContextElement;
 
-class Text implements CompositionObject
+class Text implements CompositionObject, ContextElement
 {
     /**
      * The formatting to use for this text object.
@@ -53,6 +54,15 @@ class Text implements CompositionObject
         $this->type = $type;
         $this->emoji = $emoji;
         $this->verbatim = $verbatim;
+    }
+
+    public static function create(
+        string $text,
+        string $type = 'mrkdwn',
+        bool $emoji = false,
+        bool $verbatim = false
+    ): self {
+        return new static($text, $type, $emoji, $verbatim);
     }
 
     public function getType(): string

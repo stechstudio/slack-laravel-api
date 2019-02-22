@@ -12,5 +12,13 @@ use STS\Slack\Contracts\Messaging\BlockElement;
 
 class SelectMenus implements BlockElement
 {
+    public function getType(): string
+    {
+        // TODO: Implement getType() method.
+    }
 
+    public function toSlackObjectArray(): array
+    {
+        // TODO: Implement toSlackObjectArray() method.
+    }
 }

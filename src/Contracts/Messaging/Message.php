@@ -8,11 +8,11 @@
 
 namespace STS\Slack\Contracts\Messaging;
 
-use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 interface Message
 {
     public function __toString(): string;
 
-    public function getResponse(): JsonResponse;
+    public function getResponse(): Response;
 }

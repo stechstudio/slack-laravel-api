@@ -9,9 +9,9 @@
 namespace STS\Slack\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use STS\Slack\Contracts\SlashCommands\DispatcherI;
 use STS\Slack\Http\Middleware\Request;
 use STS\Slack\SlashCommands\Dispatcher;
-use STS\Slack\SlashCommands\DispatcherI;
 use function base_path;
 
 class SlackSdk extends ServiceProvider

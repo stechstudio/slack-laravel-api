@@ -8,8 +8,8 @@
 
 namespace STS\Slack\Messaging;
 
-use Illuminate\Http\JsonResponse;
 use STS\Slack\Contracts\Messaging\Message;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Class Confirmation
@@ -29,8 +29,8 @@ class Confirmation implements Message
         return $this->getResponse()->__toString();
     }
 
-    public function getResponse(): JsonResponse
+    public function getResponse(): Response
     {
-        return response()->json([])->setStatusCode(200);
+        return new Response(null, 200);
     }
 }

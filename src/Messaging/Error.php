@@ -8,14 +8,14 @@
 
 namespace STS\Slack\Messaging;
 
-use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class Error extends Message
 {
     /** @var string */
     protected $text = "Sorry, that didn't work. Please try again.";
 
-    public function getResponse(): JsonResponse
+    public function getResponse(): Response
     {
         return response()->json([
             'response_type' => 'ephemeral',

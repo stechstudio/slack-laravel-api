@@ -12,5 +12,23 @@ use STS\Slack\Contracts\Messaging\LayoutBlock;
 
 class Divider implements LayoutBlock
 {
+    /** @var string */
+    protected static $type = 'divider';
 
+    public static function create(): self
+    {
+        return new static;
+    }
+
+    public function getType(): string
+    {
+        return self::$type;
+    }
+
+    public function toSlackObjectArray(): array
+    {
+        return [
+            'type' => 'divider',
+        ];
+    }
 }

@@ -119,7 +119,7 @@ class SlashCommand
         if ($this->hasHandler()) {
             return app()->make('SlashCommandDispatcher')->dispatch($this);
         }
-        throw new HandlerUndefined(sprintf('[] is not a valid command.', $this->getCommand()));
+        throw new HandlerUndefined(sprintf('[%s] is not a valid command.', $this->getCommand()));
     }
 
     /**
@@ -143,5 +143,10 @@ class SlashCommand
     public function toJson(): string
     {
         return json_encode($this->attributes);
+    }
+
+    public function all(): Collection
+    {
+        return $this->attributes;
     }
 }
