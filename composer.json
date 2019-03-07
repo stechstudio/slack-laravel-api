@@ -34,10 +34,10 @@
     "laravel/framework": "^5.7"
   },
   "extra": {
-        "laravel": {
-            "providers": [
-                "STS\\Slack\\Providers\\SlackSdk"
-            ]
-        }
+    "laravel": {
+      "providers": [
+        "STS\\Slack\\Providers\\SlackSdk"
+      ]
     }
+  }
 }

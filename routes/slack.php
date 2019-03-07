@@ -1,10 +1,7 @@
 <?php declare(strict_types=1);
 
-/**
- * Package: slack-laravel-api
- * Create Date: 2019-02-21
- * Created Time: 10:41
- */
+use STS\Slack\Facades\SlackRoute;
+use STS\Slack\SlashCommands\Echoes;
 
 /*
 |--------------------------------------------------------------------------
@@ -18,3 +15,16 @@
 */
 
 Route::middleware('slack')->match(['get', 'post'], '/slack/api', 'STS\Slack\Http\Controllers\Slack@webhook');
+
+/*
+|--------------------------------------------------------------------------
+| Slack Command Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register Slack commands for your application.
+|
+*/
+SlackRoute::handles('/hello', function (SlashCommand $slashCommand) {
+    return 'Hello World';
+});
+SlackRoute::handles('/echo', Echoes::class);
