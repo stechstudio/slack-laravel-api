@@ -32,12 +32,14 @@ class SlackSdk extends ServiceProvider
 
     public function register(): void
     {
-
         $this->handlePublishing();
 
-        $this->app->singleton('SlashCommandDispatcher', function ($app) {
-            return Dispatcher::create(config('slack.slash_commands'));
-        });
+        $this->app->singleton(
+            DispatcherI::class,
+            Dispatcher::class
+        );
+
+        $this->app->alias(DispatcherI::class, 'slack.slash.commander');
 
         $this->app['router']->aliasMiddleware('slack', Request::class);
     }
@@ -71,6 +73,6 @@ class SlackSdk extends ServiceProvider
 
     public function boot(): void
     {
-        $this->loadRoutesFrom($this->routePath);
+        require $this->routePath;
     }
 }

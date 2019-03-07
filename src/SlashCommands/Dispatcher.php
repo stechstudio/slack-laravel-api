@@ -24,47 +24,9 @@ class Dispatcher implements DispatcherI
      */
     protected $handlers = [];
 
-    public static function create(array $config = []): DispatcherI
+    public static function create(): DispatcherI
     {
-        $dispatcher = new static;
-        $dispatcher->registerConfiguredHandlers($config);
-        return $dispatcher;
-    }
-
-    /**
-     * Takes in a configuration and registers all the command handlers.
-     */
-    public function registerConfiguredHandlers(array $config): DispatcherI
-    {
-        foreach ($config as $command => $handler) {
-            if (is_callable($handler)) {
-                $this->handles($command, $handler);
-                continue;
-            }
-            if (class_exists($handler)) {
-                $this->handles($command, [new $handler, 'handle']);
-                continue;
-            }
-            throw new InvalidHandlerConfiguration(sprintf('[%s] is an invalid handler.', $handler));
-        }
-        return $this;
-    }
-
-    /**
-     * Register a command handler with the dispatcher.
-     */
-    public function handles(string $command, callable $handler): DispatcherI
-    {
-        $this->handlers[$command] = $handler;
-        return $this;
-    }
-
-    /**
-     * Determine if a given command has a handler.
-     */
-    public function hasHandler(string $command): bool
-    {
-        return isset($this->handlers[$command]);
+        return new static;
     }
 
     /**
@@ -88,6 +50,43 @@ class Dispatcher implements DispatcherI
     {
         unset($this->handlers[$command]);
         return $this;
+    }
+
+    /**
+     * Takes in a configuration and registers all the command handlers.
+     */
+    public function registerConfiguredHandlers(array $config): DispatcherI
+    {
+        foreach ($config as $command => $handler) {
+            if (is_callable($handler)) {
+                $this->handles($command, $handler);
+                continue;
+            }
+            if (class_exists($handler)) {
+                $this->handles($command, [new $handler, 'handle']);
+                continue;
+            }
+            throw new InvalidHandlerConfiguration(sprintf('[%s] is an invalid handler.', $handler));
+        }
+        return $this;
+    }
+
+
+    /**
+     * Register a command handler with the dispatcher.
+     */
+    public function handles(string $command, callable $handler): DispatcherI
+    {
+        $this->handlers[$command] = $handler;
+        return $this;
+    }
+
+    /**
+     * Determine if a given command has a handler.
+     */
+    public function hasHandler(string $command): bool
+    {
+        return isset($this->handlers[$command]);
     }
 
 
