@@ -75,7 +75,7 @@ class Dispatcher implements DispatcherI
     /**
      * Register a command handler with the dispatcher.
      */
-    public function handles(string $command, callable $handler): DispatcherI
+    public function handles(string $command, $handler): DispatcherI
     {
         $this->handlers[$command] = $handler;
         return $this;
