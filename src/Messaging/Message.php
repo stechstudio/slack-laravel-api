@@ -13,6 +13,7 @@ use InvalidArgumentException;
 use STS\Slack\Contracts\Messaging\LayoutBlock;
 use STS\Slack\Contracts\Messaging\Message as SlackMessage;
 use STS\Slack\Messaging\CompositionObjects\Text;
+use STS\Slack\Messaging\LayoutBlocks\Divider;
 use STS\Slack\Messaging\LayoutBlocks\Image;
 use STS\Slack\Messaging\LayoutBlocks\Section;
 use Symfony\Component\HttpFoundation\Response;
@@ -411,5 +412,10 @@ class Message implements SlackMessage
         }
 
         return $this->push($section);
+    }
+
+    public function divider()
+    {
+        return $this->push(Divider::create());
     }
 }

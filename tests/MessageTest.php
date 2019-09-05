@@ -4,6 +4,7 @@ namespace STS\Slack\Tests;
 
 use Orchestra\Testbench\TestCase;
 use STS\Slack\Messaging\CompositionObjects\Text;
+use STS\Slack\Messaging\LayoutBlocks\Divider;
 use STS\Slack\Messaging\LayoutBlocks\Image;
 use STS\Slack\Messaging\LayoutBlocks\Section;
 use STS\Slack\Messaging\Message;
@@ -37,5 +38,15 @@ class MessageTest extends TestCase
         });
         $this->assertEquals(2, $m->getBlocks()->count());
         $this->assertEquals("Hello", $m->getBlocks()->last()->getText()->getText());
+    }
+
+    public function testMessageCanAddDivider()
+    {
+        $m = Message::create('', '');
+        $this->assertFalse($m->hasBlocks());
+
+        $m->divider();
+        $this->assertTrue($m->hasBlocks());
+        $this->assertInstanceOf(Divider::class, $m->getBlocks()->first());
     }
 }
