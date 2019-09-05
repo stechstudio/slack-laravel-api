@@ -57,6 +57,9 @@ class Dispatcher implements DispatcherI
      */
     public function registerConfiguredHandlers(array $config): DispatcherI
     {
+        if ($config == 0){
+            $config = config('slack.slash_commands');
+        }
         foreach ($config as $command => $handler) {
             if (is_callable($handler)) {
                 $this->handles($command, $handler);
