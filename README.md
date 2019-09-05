@@ -81,10 +81,7 @@ namespace STS\Slack\SlashCommands;
 use Illuminate\Support\Facades\Log;
 use STS\Slack\Contracts\Messaging\Message as SlackMessage;
 use STS\Slack\Contracts\SlashCommands\ControllerI;
-use STS\Slack\Messaging\BlockElements\Image;
-use STS\Slack\Messaging\CompositionObjects\Text;
 use STS\Slack\Messaging\LayoutBlocks\Context;
-use STS\Slack\Messaging\LayoutBlocks\Divider;
 use STS\Slack\Messaging\LayoutBlocks\Section;
 use STS\Slack\Messaging\Message;
 use STS\Slack\Models\SlashCommand;
@@ -100,7 +97,7 @@ class Echoes implements ControllerI
                 'https://cdn.cp.adobe.io/content/2/dcx/9ed8e319-b714-4c8d-b9d5-7a6d419e50b3/rendition/preview.jpg/version/0/format/jpg/dimension/width/size/1200',
                 'Echo Hacker'
             )
-            ->addSection('*Slack Parameters* ', function($section) use($slashCommand) {
+            ->addSection('*Slack Parameters* ', function(Section $section) use($slashCommand) {
                 $section
                     ->addText("*Team ID*: {$slashCommand->getTeamId()}")
                     ->addText("*Team Domain*: {$slashCommand->getTeamDomain()}")
@@ -112,7 +109,7 @@ class Echoes implements ControllerI
             })
             ->addSection("*Your Text*\n{$slashCommand->getText()}")
             ->addDivider()
-            ->addContext(function($context) {
+            ->addContext(function(Context $context) {
                 $context
                     ->addImage(
                         'https://avatars.slack-edge.com/2019-02-19/556373803382_e2c54afedc2a4fb73ccd_512.png',
@@ -120,7 +117,7 @@ class Echoes implements ControllerI
                     )
                     ->addText('slack-laravel-api echo handler');
             })
-            ->tap(function($message) {
+            ->tap(function(Message $message) {
                 Log::warning(json_encode($message->toSlackObjectArray()));                
             });
     }
