@@ -12,6 +12,8 @@ use Illuminate\Support\Collection;
 use InvalidArgumentException;
 use STS\Slack\Contracts\Messaging\LayoutBlock;
 use STS\Slack\Contracts\Messaging\Message as SlackMessage;
+use STS\Slack\Messaging\CompositionObjects\Text;
+use STS\Slack\Messaging\LayoutBlocks\Image;
 use Symfony\Component\HttpFoundation\Response;
 use function collect;
 
@@ -392,6 +394,11 @@ class Message implements SlackMessage
     public function hasThreadTs(): bool
     {
         return ! empty($this->threadTS);
+    }
+
+    public function image(string $imageUrl, string $altText, ?Text $title = null)
+    {
+        return $this->push(Image::create($imageUrl, $altText, $title));
     }
 
 
