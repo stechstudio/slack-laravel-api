@@ -14,6 +14,7 @@ use STS\Slack\Contracts\Messaging\ContextElement;
 use STS\Slack\Contracts\Messaging\LayoutBlock;
 use function collect;
 use STS\Slack\Messaging\CompositionObjects\Text;
+use STS\Slack\Messaging\BlockElements\Image;
 
 class Context implements LayoutBlock
 {
@@ -78,5 +79,10 @@ class Context implements LayoutBlock
     public function text(string $text): self
     {
         return $this->push(Text::create($text));
+    }
+
+    public function image(string $imageUrl, string $altText): self
+    {
+        return $this->push(Image::create($imageUrl, $altText));
     }
 }

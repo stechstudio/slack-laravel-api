@@ -56,17 +56,41 @@ class MessageTest extends TestCase
         $m = Message::create('', '');
         $this->assertFalse($m->hasBlocks());
 
-        // First with no callback
-        $m->context();
-        $this->assertTrue($m->hasBlocks());
-        $this->assertInstanceOf(Context::class, $m->getBlocks()->first());
-        $this->assertEquals(0, $m->getBlocks()->last()->getElements()->count());
-
-        // Now with a callback
         $m->context(function(Context $context) {
             $context->push(Text::create("Hello"));
         });
-        $this->assertEquals(2, $m->getBlocks()->count());
+        $this->assertEquals(1, $m->getBlocks()->count());
         $this->assertEquals(1, $m->getBlocks()->last()->getElements()->count());
+    }
+
+    public function testMessageIsTappable()
+    {
+        $m = Message::create('', 'Hey there');
+        $this->assertEquals("Hey there", $m->getText());
+
+        $m->tap(function(Message $message) {
+            $message->setText("Hello");
+        });
+
+        $this->assertEquals("Hello", $m->getText());
+    }
+
+    public function testAddMultipleBlocksChained()
+    {
+        $result = Message::create('', '')
+            ->image('image-url', 'Alt Text')
+            ->section('Simple section')
+            ->section('Complex section', function(Section $section) {
+                $section->text("This is a complex section");
+            })
+            ->divider()
+            ->context(function(Context $context) {
+                $context->text('Contextual stuff');
+            })
+            ->tap(function(Message $m) {
+                $m->setText("Changing the text");
+            });
+
+        $this->assertEquals(5, $result->getBlocks()->count());
     }
 }

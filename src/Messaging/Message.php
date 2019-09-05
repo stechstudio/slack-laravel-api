@@ -9,6 +9,7 @@
 namespace STS\Slack\Messaging;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Traits\Tappable;
 use InvalidArgumentException;
 use STS\Slack\Contracts\Messaging\LayoutBlock;
 use STS\Slack\Contracts\Messaging\Message as SlackMessage;
@@ -22,6 +23,8 @@ use function collect;
 
 class Message implements SlackMessage
 {
+    use Tappable;
+
     /**
      * The usage of this field changes depending on whether you're using blocks or not. If you are, this is used as a
      * fallback string to display in notifications. If you aren't, this is the main body text of the message. It can be
@@ -426,7 +429,7 @@ class Message implements SlackMessage
         return $this->push(Divider::create());
     }
 
-    public function context(?callable $callback = null): self
+    public function context(callable $callback): self
     {
         return $this->pushWithCallback(Context::create(), $callback);
     }
