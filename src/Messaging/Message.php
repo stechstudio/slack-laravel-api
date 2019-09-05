@@ -13,6 +13,7 @@ use InvalidArgumentException;
 use STS\Slack\Contracts\Messaging\LayoutBlock;
 use STS\Slack\Contracts\Messaging\Message as SlackMessage;
 use STS\Slack\Messaging\CompositionObjects\Text;
+use STS\Slack\Messaging\LayoutBlocks\Context;
 use STS\Slack\Messaging\LayoutBlocks\Divider;
 use STS\Slack\Messaging\LayoutBlocks\Image;
 use STS\Slack\Messaging\LayoutBlocks\Section;
@@ -115,6 +116,18 @@ class Message implements SlackMessage
     {
         $this->blocks->push($block);
         return $this;
+    }
+
+    /**
+     * Allows caller to provide an optional callback to further customize the block before it is pushed
+     */
+    public function pushWithCallback(LayoutBlock $block, ?callable $callback = null): self
+    {
+        if($callback != null) {
+            $callback($block, $this);
+        }
+
+        return $this->push($block);
     }
 
     /**
@@ -398,24 +411,23 @@ class Message implements SlackMessage
         return ! empty($this->threadTS);
     }
 
-    public function image(string $imageUrl, string $altText, ?Text $title = null)
+    public function image(string $imageUrl, string $altText, ?Text $title = null): self
     {
         return $this->push(Image::create($imageUrl, $altText, $title));
     }
 
-    public function section(string $text, ?callable $callback = null)
+    public function section(string $text, ?callable $callback = null): self
     {
-        $section = Section::create($text);
-
-        if($callback != null) {
-            $callback($section);
-        }
-
-        return $this->push($section);
+        return $this->pushWithCallback(Section::create($text), $callback);
     }
 
-    public function divider()
+    public function divider(): self
     {
         return $this->push(Divider::create());
+    }
+
+    public function context(?callable $callback = null): self
+    {
+        return $this->pushWithCallback(Context::create(), $callback);
     }
 }

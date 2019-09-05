@@ -68,4 +68,9 @@ class Context implements LayoutBlock
         $this->elements->push($element);
         return $this;
     }
+
+    public function getElements(): Collection
+    {
+        return $this->elements;
+    }
 }

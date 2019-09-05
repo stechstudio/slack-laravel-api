@@ -4,6 +4,7 @@ namespace STS\Slack\Tests;
 
 use Orchestra\Testbench\TestCase;
 use STS\Slack\Messaging\CompositionObjects\Text;
+use STS\Slack\Messaging\LayoutBlocks\Context;
 use STS\Slack\Messaging\LayoutBlocks\Divider;
 use STS\Slack\Messaging\LayoutBlocks\Image;
 use STS\Slack\Messaging\LayoutBlocks\Section;
@@ -18,7 +19,7 @@ class MessageTest extends TestCase
 
         $m->image('some-url', 'Alt Test');
         $this->assertTrue($m->hasBlocks());
-        $this->assertInstanceOf(Image::class, $m->getBlocks()->first());
+        $this->assertInstanceOf(Image::class, $m->getBlocks()->last());
     }
 
     public function testMessageCanAddSection()
@@ -30,7 +31,7 @@ class MessageTest extends TestCase
         $m->section("Hi there");
         $this->assertTrue($m->hasBlocks());
         $this->assertInstanceOf(Section::class, $m->getBlocks()->first());
-        $this->assertEquals("Hi there", $m->getBlocks()->first()->getText()->getText());
+        $this->assertEquals("Hi there", $m->getBlocks()->last()->getText()->getText());
 
         // Now with a callback
         $m->section("Hi there", function(Section $section) {
@@ -48,5 +49,24 @@ class MessageTest extends TestCase
         $m->divider();
         $this->assertTrue($m->hasBlocks());
         $this->assertInstanceOf(Divider::class, $m->getBlocks()->first());
+    }
+
+    public function testMessageCanAddContext()
+    {
+        $m = Message::create('', '');
+        $this->assertFalse($m->hasBlocks());
+
+        // First with no callback
+        $m->context();
+        $this->assertTrue($m->hasBlocks());
+        $this->assertInstanceOf(Context::class, $m->getBlocks()->first());
+        $this->assertEquals(0, $m->getBlocks()->last()->getElements()->count());
+
+        // Now with a callback
+        $m->context(function(Context $context) {
+            $context->push(Text::create("Hello"));
+        });
+        $this->assertEquals(2, $m->getBlocks()->count());
+        $this->assertEquals(1, $m->getBlocks()->last()->getElements()->count());
     }
 }
