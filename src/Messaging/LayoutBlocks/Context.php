@@ -13,6 +13,7 @@ use Ramsey\Uuid\Uuid;
 use STS\Slack\Contracts\Messaging\ContextElement;
 use STS\Slack\Contracts\Messaging\LayoutBlock;
 use function collect;
+use STS\Slack\Messaging\CompositionObjects\Text;
 
 class Context implements LayoutBlock
 {
@@ -72,5 +73,10 @@ class Context implements LayoutBlock
     public function getElements(): Collection
     {
         return $this->elements;
+    }
+
+    public function text(string $text): self
+    {
+        return $this->push(Text::create($text));
     }
 }
