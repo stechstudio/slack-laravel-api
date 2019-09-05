@@ -3,7 +3,7 @@
   "description": "Slack SDK for writing our own Slack App integrations.",
   "type": "library",
   "require": {
-    "php": ">=7.0",
+    "php": ">=7.2",
     "ext-intl": "*",
     "guzzlehttp/psr7": "^1.5",
     "php-http/curl-client": "^1.7",
