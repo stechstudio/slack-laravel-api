@@ -14,6 +14,7 @@ use STS\Slack\Contracts\Messaging\LayoutBlock;
 use STS\Slack\Contracts\Messaging\Message as SlackMessage;
 use STS\Slack\Messaging\CompositionObjects\Text;
 use STS\Slack\Messaging\LayoutBlocks\Image;
+use STS\Slack\Messaging\LayoutBlocks\Section;
 use Symfony\Component\HttpFoundation\Response;
 use function collect;
 
@@ -401,5 +402,14 @@ class Message implements SlackMessage
         return $this->push(Image::create($imageUrl, $altText, $title));
     }
 
+    public function section(string $text, ?callable $callback = null)
+    {
+        $section = Section::create($text);
 
+        if($callback != null) {
+            $callback($section);
+        }
+
+        return $this->push($section);
+    }
 }
