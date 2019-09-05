@@ -15,7 +15,8 @@
     "classmap": [
     ],
     "psr-4": {
-      "STS\\Slack\\": "src"
+      "STS\\Slack\\": "src",
+      "STS\\Slack\\Tests\\": "tests"
     },
     "files": [
     ]
@@ -33,7 +34,9 @@
     "phpstan/phpstan-doctrine": "^0.11.1",
     "illuminate/http": "^5.7|^6.0",
     "illuminate/support": "^5.7|^6.0",
-    "laravel/framework": "^5.7|^6.0"
+    "laravel/framework": "^5.7|^6.0",
+    "phpunit/phpunit": "^8.3",
+    "orchestra/testbench": "^4.0"
   },
   "extra": {
     "laravel": {
