@@ -1,8 +1,8 @@
 # Slack Laravel API
-Easily handle Slack web hook requests via Laravel style routing with Middleware authentication. If you have ever implemented a webhook for Slack, your going to want to try this.
+Easily handle Slack web hook requests via Laravel style routing with Middleware authentication. If you have ever implemented a webhook for Slack, you're going to want to try this.
 
 ## Versions and compatibility
-* **PHP Version:** *>=7.2*
+* **PHP Version**: *>=7.2*
 * **Laravel**: *^5.7|^6.0*
 
 ## Installation
@@ -13,9 +13,9 @@ composer require stechstudio/slack-laravel-api
 ## Configuration
 
 #### .env
-On each HTTP request that Slack sends, they [add an X-Slack-Signature HTTP header](https://api.slack.com/docs/verifying-requests-from-slack#about) . The signature is created by combining the signing secret with the body of the request we're sending using a standard HMAC-SHA256 keyed hash.
+On each HTTP request that Slack sends, they [add an X-Slack-Signature HTTP header](https://api.slack.com/docs/verifying-requests-from-slack#about). The signature is created by combining the signing secret with the body of the request we're sending using a standard HMAC-SHA256 keyed hash.
 
-It is this signing secret that is used by the middleware to authenticate the request.
+It is this signing secret that is used by the middleware to authenticate the request:
 ```ini
 SLACK_SIGNING_SECRET="slacksecretestringhere"
 ```
@@ -26,7 +26,7 @@ artisan vendor:publish --provider=slack-routes
 ```
 
 ## Usage
-After publishing the Slack Routes you can look in `base('routes/slack.php)` to find the API route and some working examples of Slack routes.
+After publishing the Slack Routes you can look in `base('routes/slack.php')` to find the API route and some working examples of Slack routes.
 
 #### Web Route
 ```php 
@@ -46,7 +46,7 @@ Route::middleware('slack')->match(['get', 'post'], '/slack/api', 'STS\Slack\Http
 
 By default, your application will have **GET|POST|HEAD** methods on the `slack/api` URI that will pass everything to `STS\Slack\Http\Controllers\Slack@webhook` via the **slack** middleware.
 
-You may modify the the URI or even add addition routes for other endpoints.
+You may modify the URI or even add addition routes for other endpoints.
 #### Slack Command Routes
 ```php
 use STS\Slack\Facades\SlackRoute;
@@ -69,7 +69,7 @@ SlackRoute::handles('/echo', Echoes::class);
 
 These are working examples, and if you setup both Slack slash commands to use the configured URI, simply typing `/hello` or `/echo yoodle` will trigger the appropriate response.
 
-THe `SlackRoute::handles()` expects you to provide a command that matches the slash command in Slack, along with a Callable to handle the command.
+The `SlackRoute::handles()` expects you to provide a command that matches the slash command in Slack, along with a Callable to handle the command.
 
 This is best demonstrated in the Echo command sample.
 
@@ -131,9 +131,9 @@ As you can see, the **SlashCommand** provides access to everything that Slack se
 * `$slashCommand->getCommand()`
 * `$slashCommand->getText()`
 
-Assuming the user typed `\echo yoodle ay e who` into Slack to trigger this. Then `getCommand()` would return `\echo` and `getText()` returns `yoodle ay e who`. We often then parse the text for sub-commands.
+Assume the user typed `/echo yoodle ay e who` into Slack to trigger this. Then `getCommand()` would return `/echo` and `getText()` returns `yoodle ay e who`. We often then parse the text for sub-commands.
 
-The `SlackMessage` class is a fairly powerful wrapper the [Building Block message layout format specified by the Slack API](https://api.slack.com/messaging/composing/layouts). Anything you can do with the blocks, you can do with this class.
+The `SlackMessage` class is a fairly powerful wrapper around the [Building Block message layout format specified by the Slack API](https://api.slack.com/messaging/composing/layouts). Anything you can do with the blocks, you can do with this class.
 
 ## Conclusion
-That's it, handle your command and return a slack formatted message with Laravel Middleware authenticating each slack call for you and some handy Classes to make handling these things easier.
+That's it, handle your command and return a Slack-formatted message with Laravel middleware authenticating each Slack call for you and some handy classes to make handling these things easier.
