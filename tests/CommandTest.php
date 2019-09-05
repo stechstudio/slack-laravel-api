@@ -15,13 +15,13 @@ class CommandTest extends TestCase
             'text' => "Hello"
         ]);
 
-        $message = $command->message();
+        $message = $command->createMessage();
 
         $this->assertInstanceOf(Message::class, $message);
         $this->assertEquals(12345, $message->getChannel());
         $this->assertEquals("Hello", $message->getText());
 
-        $message = $command->message("Yo");
+        $message = $command->createMessage("Yo");
 
         $this->assertEquals("Yo", $message->getText());
     }

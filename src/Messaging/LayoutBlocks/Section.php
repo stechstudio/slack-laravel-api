@@ -156,7 +156,7 @@ class Section implements LayoutBlock
         return $this;
     }
 
-    public function text(string $text)
+    public function addText(string $text): self
     {
         return $this->push(Text::create($text));
     }

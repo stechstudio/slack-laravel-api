@@ -76,12 +76,12 @@ class Context implements LayoutBlock
         return $this->elements;
     }
 
-    public function text(string $text): self
+    public function addText(string $text): self
     {
         return $this->push(Text::create($text));
     }
 
-    public function image(string $imageUrl, string $altText): self
+    public function addImage(string $imageUrl, string $altText): self
     {
         return $this->push(Image::create($imageUrl, $altText));
     }

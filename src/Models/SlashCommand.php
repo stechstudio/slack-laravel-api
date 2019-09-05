@@ -28,7 +28,7 @@ class SlashCommand
         return new static($attributes);
     }
 
-    public function message(?string $text = null) {
+    public function createMessage(?string $text = null) {
         return Message::create($this->getChannelId(), $text ?? $this->getText());
     }
 

@@ -414,22 +414,22 @@ class Message implements SlackMessage
         return ! empty($this->threadTS);
     }
 
-    public function image(string $imageUrl, string $altText, ?Text $title = null): self
+    public function addImage(string $imageUrl, string $altText, ?Text $title = null): self
     {
         return $this->push(Image::create($imageUrl, $altText, $title));
     }
 
-    public function section(string $text, ?callable $callback = null): self
+    public function addSection(string $text, ?callable $callback = null): self
     {
         return $this->pushWithCallback(Section::create($text), $callback);
     }
 
-    public function divider(): self
+    public function addDivider(): self
     {
         return $this->push(Divider::create());
     }
 
-    public function context(callable $callback): self
+    public function addContext(callable $callback): self
     {
         return $this->pushWithCallback(Context::create(), $callback);
     }

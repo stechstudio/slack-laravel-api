@@ -12,7 +12,7 @@ class SectionTest extends TestCase
         $s = Section::create("");
         $this->assertEquals(0, $s->getFields()->count());
 
-        $s->text('Hello');
+        $s->addText('Hello');
         $this->assertEquals(1, $s->getFields()->count());
         $this->assertEquals("Hello", $s->getFields()->last()->getText());
     }

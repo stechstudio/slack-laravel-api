@@ -17,7 +17,7 @@ class MessageTest extends TestCase
         $m = Message::create('', '');
         $this->assertFalse($m->hasBlocks());
 
-        $m->image('some-url', 'Alt Test');
+        $m->addImage('some-url', 'Alt Test');
         $this->assertTrue($m->hasBlocks());
         $this->assertInstanceOf(Image::class, $m->getBlocks()->last());
     }
@@ -28,13 +28,13 @@ class MessageTest extends TestCase
         $this->assertFalse($m->hasBlocks());
 
         // First with no callback
-        $m->section("Hi there");
+        $m->addSection("Hi there");
         $this->assertTrue($m->hasBlocks());
         $this->assertInstanceOf(Section::class, $m->getBlocks()->first());
         $this->assertEquals("Hi there", $m->getBlocks()->last()->getText()->getText());
 
         // Now with a callback
-        $m->section("Hi there", function(Section $section) {
+        $m->addSection("Hi there", function(Section $section) {
             $section->setText(Text::create("Hello"));
         });
         $this->assertEquals(2, $m->getBlocks()->count());
@@ -46,7 +46,7 @@ class MessageTest extends TestCase
         $m = Message::create('', '');
         $this->assertFalse($m->hasBlocks());
 
-        $m->divider();
+        $m->addDivider();
         $this->assertTrue($m->hasBlocks());
         $this->assertInstanceOf(Divider::class, $m->getBlocks()->first());
     }
@@ -56,7 +56,7 @@ class MessageTest extends TestCase
         $m = Message::create('', '');
         $this->assertFalse($m->hasBlocks());
 
-        $m->context(function(Context $context) {
+        $m->addContext(function(Context $context) {
             $context->push(Text::create("Hello"));
         });
         $this->assertEquals(1, $m->getBlocks()->count());
@@ -78,14 +78,14 @@ class MessageTest extends TestCase
     public function testAddMultipleBlocksChained()
     {
         $result = Message::create('', '')
-            ->image('image-url', 'Alt Text')
-            ->section('Simple section')
-            ->section('Complex section', function(Section $section) {
-                $section->text("This is a complex section");
+            ->addImage('image-url', 'Alt Text')
+            ->addSection('Simple section')
+            ->addSection('Complex section', function(Section $section) {
+                $section->addText("This is a complex section");
             })
-            ->divider()
-            ->context(function(Context $context) {
-                $context->text('Contextual stuff');
+            ->addDivider()
+            ->addContext(function(Context $context) {
+                $context->addText('Contextual stuff');
             })
             ->tap(function(Message $m) {
                 $m->setText("Changing the text");
