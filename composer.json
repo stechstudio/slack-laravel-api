@@ -3,6 +3,8 @@
   "description": "Slack SDK for writing our own Slack App integrations.",
   "type": "library",
   "require": {
+    "php": ">=7.2",
+    "ext-intl": "*",
     "guzzlehttp/psr7": "^1.5",
     "php-http/curl-client": "^1.7",
     "jolicode/slack-php-api": "^1.0",
@@ -13,7 +15,8 @@
     "classmap": [
     ],
     "psr-4": {
-      "STS\\Slack\\": "src"
+      "STS\\Slack\\": "src",
+      "STS\\Slack\\Tests\\": "tests"
     },
     "files": [
     ]
@@ -29,9 +32,11 @@
   "require-dev": {
     "phpstan/phpstan": "^0.11.2",
     "phpstan/phpstan-doctrine": "^0.11.1",
-    "illuminate/http": "^5.7",
-    "illuminate/support": "^5.7",
-    "laravel/framework": "^5.7"
+    "illuminate/http": "^5.7|^6.0",
+    "illuminate/support": "^5.7|^6.0",
+    "laravel/framework": "^5.7|^6.0",
+    "phpunit/phpunit": "^8.3",
+    "orchestra/testbench": "^4.0"
   },
   "extra": {
     "laravel": {

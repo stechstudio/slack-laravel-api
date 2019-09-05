@@ -13,6 +13,8 @@ use Ramsey\Uuid\Uuid;
 use STS\Slack\Contracts\Messaging\ContextElement;
 use STS\Slack\Contracts\Messaging\LayoutBlock;
 use function collect;
+use STS\Slack\Messaging\CompositionObjects\Text;
+use STS\Slack\Messaging\BlockElements\Image;
 
 class Context implements LayoutBlock
 {
@@ -67,5 +69,20 @@ class Context implements LayoutBlock
     {
         $this->elements->push($element);
         return $this;
+    }
+
+    public function getElements(): Collection
+    {
+        return $this->elements;
+    }
+
+    public function addText(string $text): self
+    {
+        return $this->push(Text::create($text));
+    }
+
+    public function addImage(string $imageUrl, string $altText): self
+    {
+        return $this->push(Image::create($imageUrl, $altText));
     }
 }

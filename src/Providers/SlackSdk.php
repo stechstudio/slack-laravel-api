@@ -42,6 +42,10 @@ class SlackSdk extends ServiceProvider
         $this->app->alias(DispatcherI::class, 'slack.slash.commander');
 
         $this->app['router']->aliasMiddleware('slack', Request::class);
+
+        $this->app->singleton('SlashCommandDispatcher', function ($app) {
+            return Dispatcher::create()->registerConfiguredHandlers(config('slack.slash_commands'));
+        });
     }
 
     /**

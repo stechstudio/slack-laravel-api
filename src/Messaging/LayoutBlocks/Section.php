@@ -155,4 +155,9 @@ class Section implements LayoutBlock
         $this->fields->prepend($field);
         return $this;
     }
+
+    public function addText(string $text): self
+    {
+        return $this->push(Text::create($text));
+    }
 }

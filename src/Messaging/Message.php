@@ -9,14 +9,22 @@
 namespace STS\Slack\Messaging;
 
 use Illuminate\Support\Collection;
+use Illuminate\Support\Traits\Tappable;
 use InvalidArgumentException;
 use STS\Slack\Contracts\Messaging\LayoutBlock;
 use STS\Slack\Contracts\Messaging\Message as SlackMessage;
+use STS\Slack\Messaging\CompositionObjects\Text;
+use STS\Slack\Messaging\LayoutBlocks\Context;
+use STS\Slack\Messaging\LayoutBlocks\Divider;
+use STS\Slack\Messaging\LayoutBlocks\Image;
+use STS\Slack\Messaging\LayoutBlocks\Section;
 use Symfony\Component\HttpFoundation\Response;
 use function collect;
 
 class Message implements SlackMessage
 {
+    use Tappable;
+
     /**
      * The usage of this field changes depending on whether you're using blocks or not. If you are, this is used as a
      * fallback string to display in notifications. If you aren't, this is the main body text of the message. It can be
@@ -111,6 +119,18 @@ class Message implements SlackMessage
     {
         $this->blocks->push($block);
         return $this;
+    }
+
+    /**
+     * Allows caller to provide an optional callback to further customize the block before it is pushed
+     */
+    public function pushWithCallback(LayoutBlock $block, ?callable $callback = null): self
+    {
+        if($callback != null) {
+            $callback($block, $this);
+        }
+
+        return $this->push($block);
     }
 
     /**
@@ -394,5 +414,23 @@ class Message implements SlackMessage
         return ! empty($this->threadTS);
     }
 
+    public function addImage(string $imageUrl, string $altText, ?Text $title = null): self
+    {
+        return $this->push(Image::create($imageUrl, $altText, $title));
+    }
 
+    public function addSection(string $text, ?callable $callback = null): self
+    {
+        return $this->pushWithCallback(Section::create($text), $callback);
+    }
+
+    public function addDivider(): self
+    {
+        return $this->push(Divider::create());
+    }
+
+    public function addContext(callable $callback): self
+    {
+        return $this->pushWithCallback(Context::create(), $callback);
+    }
 }
