@@ -11,6 +11,7 @@ namespace STS\Slack\Models;
 use Illuminate\Support\Collection;
 use STS\Slack\Exceptions\HandlerUndefined;
 use function json_encode;
+use STS\Slack\Messaging\Message;
 
 class SlashCommand
 {
@@ -25,6 +26,10 @@ class SlashCommand
     public static function create(array $attributes): self
     {
         return new static($attributes);
+    }
+
+    public function message(?string $text = null) {
+        return Message::create($this->getChannelId(), $text ?? $this->getText());
     }
 
     /**
