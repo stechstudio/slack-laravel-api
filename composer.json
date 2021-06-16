@@ -39,6 +39,7 @@
     "illuminate/http": "^8.46",
     "illuminate/support": "^8.46",
     "laravel/framework": "^8.46",
-    "phpunit/phpunit": "^9.5"
+    "phpunit/phpunit": "^9.5",
+    "orchestra/testbench": "^6.18"
   }
 }
