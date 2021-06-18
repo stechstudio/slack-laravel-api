@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * Package: slack-sdk-php
@@ -44,7 +46,7 @@ class SlackSdk extends ServiceProvider
         $this->app['router']->aliasMiddleware('slack', Request::class);
 
         $this->app->singleton('SlashCommandDispatcher', function ($app) {
-            return Dispatcher::create()->registerConfiguredHandlers(config('slack.slash_commands'));
+            return Dispatcher::create();
         });
     }
 
@@ -77,6 +79,12 @@ class SlackSdk extends ServiceProvider
 
     public function boot(): void
     {
-        require $this->routePath;
+
+        if (file_exists(base_path('routes/slack.php'))) {
+            require base_path('routes/slack.php');
+            return;
+        }
+
+        require __DIR__ . '/../../routes/slack.php';
     }
 }
