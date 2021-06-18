@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * Package: slack-sdk-php
@@ -36,7 +38,19 @@ class Dispatcher implements DispatcherI
      */
     public function dispatch(SlashCommand $slashCommand)
     {
-        $result = call_user_func($this->handlers[$slashCommand->getCommand()], $slashCommand);
+        if (is_callable($this->handlers[$slashCommand->getCommand()])) {
+            $result = call_user_func([$this->handlers[$slashCommand->getCommand()], 'handle'], $slashCommand);
+        }
+
+        if (
+            class_exists(
+                $this->handlers[$slashCommand->getCommand()]
+            )
+        ) {
+            $handler = new $this->handlers[$slashCommand->getCommand()];
+            $result = $handler->handle($slashCommand);
+        }
+
         if (is_a($result, Message::class)) {
             return $result->getResponse();
         }
@@ -57,7 +71,7 @@ class Dispatcher implements DispatcherI
      */
     public function registerConfiguredHandlers(array $config): DispatcherI
     {
-        if ($config == 0){
+        if ($config == 0) {
             $config = config('slack.slash_commands');
         }
         foreach ($config as $command => $handler) {
@@ -80,6 +94,7 @@ class Dispatcher implements DispatcherI
      */
     public function handles(string $command, $handler): DispatcherI
     {
+
         $this->handlers[$command] = $handler;
         return $this;
     }
@@ -91,6 +106,4 @@ class Dispatcher implements DispatcherI
     {
         return isset($this->handlers[$command]);
     }
-
-
 }
