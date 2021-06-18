@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * Package: slack-sdk-php
@@ -28,7 +30,8 @@ class SlashCommand
         return new static($attributes);
     }
 
-    public function createMessage(?string $text = null) {
+    public function createMessage(?string $text = null)
+    {
         return Message::create($this->getChannelId(), $text ?? $this->getText());
     }
 
@@ -122,7 +125,7 @@ class SlashCommand
     public function dispatch()
     {
         if ($this->hasHandler()) {
-            return app()->make('SlashCommandDispatcher')->dispatch($this);
+            return app()->make('slack.slash.commander')->dispatch($this);
         }
         throw new HandlerUndefined(sprintf('[%s] is not a valid command.', $this->getCommand()));
     }
@@ -132,7 +135,7 @@ class SlashCommand
      */
     public function hasHandler(): bool
     {
-        return app()->make('SlashCommandDispatcher')->hasHandler($this->getCommand());
+        return app()->make('slack.slash.commander')->hasHandler($this->getCommand());
     }
 
     /**
